@@ -60,11 +60,16 @@
             margin: 10px;
         }
        #sign-up{
-        width: 200px;
+        width: 150px;
         height: 40px;
         background-color: black;
         color: white;
         padding: 10px;
+        border-radius: 10px;
+        transition: 0.4s;
+       }
+       #sign-up:hover{
+        transform: scaleX(1.1) scaleY(1.1);
        }
        #page-filed{
         color: red;
@@ -124,6 +129,12 @@
 
         let pass1 = document.getElementById("password_first"); 
         let pass2 = document.getElementById("password_second"); 
+
+        document.getElementById("name").innerHTML = "";
+        document.getElementById("email").innerText =  "";
+        document.getElementById("password_first").innerText = ""; 
+        document.getElementById("password_second").innerText = ""; 
+
         // localStorage values
         // here we will get list of users  \|| or check with username
        let localObj =  localStorage.getItem(email.value) ;
@@ -144,6 +155,9 @@
                 btn.style.display = 'block' ;
             }
             else {
+                let btn = document.getElementById("page-filed") ;
+                btn.style.display = 'none' ;
+
                 if(localObj != null){
                         if(email.value === localEmail){
                         let bnt = document.getElementById("check-data");
