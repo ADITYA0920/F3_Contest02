@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+    <title>Sign_Up</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+            font-family: 'Rubik', sans-serif;
+        }
+        .header{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 10px;
+            margin: 10px;
+            /* border: 2px solid orangered; */
+        }
+        
+        .left-head{
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+        }
+
+        /* middle */
+        .middle{
+            display: flex;
+            flex-direction: column;
+            row-gap: 25px;
+            padding: 10px;
+            /* border: 1px solid red; */
+            margin-left: 250px;
+            margin-top: 100px;
+        }
+        .middle h2{
+            font-size: 50px;
+            /* border: 1px solid red; */
+        }
+        .form{
+            display: flex;
+            flex-direction: column;
+            margin-top: 10px;
+            /* border: 1px solid red; */
+            margin-left: 100px;
+        }
+        .form input{
+            width: 600px;
+            height: 40px;
+            border: none;
+            border-bottom: 3px solid gray;
+            
+        }
+        .prompt{
+            margin: 10px;
+        }
+       #sign-up{
+        width: 200px;
+        height: 40px;
+        background-color: black;
+        color: white;
+        padding: 10px;
+       }
+       #page-filed{
+        color: red;
+        display: none;
+       }
+       #check-data{
+        color: green;
+        display: none;
+       }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2>Header</h2>
+        <div class="left-head">
+            <button onclick="signInBtn()">SignIn</button>
+            <button id="profi">Pofile</button>
+        </div>
+        <!-- // it only have bottom border; -->
+    </div>
+
+    <div class="middle">
+        <h2>Sign_Up</h2>
+        <div class="form">
+            <input type="text" id="name" placeholder="Full name">
+            <br>
+            <input type="text" id ="email" placeholder="Email">
+            <br>
+            <input type="password" id="password_first" placeholder="Password">
+            <br>
+            <input type="password" id="password_second" placeholder="Confirm Password">
+        </div>
+        <div class="prompt">
+            <h4 id="page-filed">
+                Error : All the field are mandatory
+            </h4>
+            <h4 id="check-data">
+                SuccesFully Sign_Up.....
+            </h4>
+        </div>
+        <button id="sign-up" onclick="signup()">
+            Sign_Up
+        </button>
+    </div>
+
+    <script>
+        // user values
+
+        
+    
+    //    document.getElementsByTagNameNS("input").addEv
+        function signup(){
+
+        let name = document.getElementById("name") ;
+        let email = document.getElementById("email") ;
+
+        let pass1 = document.getElementById("password_first"); 
+        let pass2 = document.getElementById("password_second"); 
+        // localStorage values
+        // here we will get list of users  \|| or check with username
+       let localObj =  localStorage.getItem(email.value) ;
+       let local_name = "";
+       let localEmail = "";
+
+       if(localObj != null){
+           let obj = JSON.parse(localObj) ;
+            console.log(obj);
+            local_name = obj.name ;
+            localEmail = obj.email ; 
+       }
+      
+
+
+            if(name.value ==="" || email.value ==="" || pass1.value ==="" || pass1.value ==="" ){
+                let btn = document.getElementById("page-filed") ;
+                btn.style.display = 'block' ;
+            }
+            else {
+                if(localObj != null){
+                        if(email.value === localEmail){
+                        let bnt = document.getElementById("check-data");
+                        btn.innerText = 'Email is alredy exist' ;
+                        btn.style.display = 'block' ;
+                    }
+                }               
+                else if(pass1.value  !=  pass2.value){
+                    let btn = document.getElementById("page-filed") ;
+                    btn.innerText = 'PassWords are not matching ';
+                    btn.style.display = 'block' ;
+                }
+                else{
+                    let obj = {
+                        name : name.value ,
+                        email : email.value ,
+                        pass : pass2.value
+                    }
+                    let str = JSON.stringify(obj) ;
+
+                    localStorage.setItem(email.value,str) ;
+
+                    let bnt = document.getElementById("check-data") ;
+                    btn.innerText = 'SuccesFully SignUp' ;
+                    btn.style.display = 'block' ;
+                }
+            }
+        }
+        function signInBtn(){
+            window.location.assign("signIn.html") ;
+        }
+
+    </script>
+</body>
+</html>

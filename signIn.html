@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignIn</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+            font-family: 'Rubik', sans-serif;
+        }
+        .card{
+            width: 500px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 15px;
+            margin: 150px auto 0px;
+            border: 5px solid gray;
+            border-radius: 20px;
+            padding: 15px;
+        }
+        #header{
+            font-size: 20px;
+            justify-content: center;
+        }
+        .form{
+            display: flex;
+            flex-direction: column;
+            row-gap: 15px;
+            padding: 15px;
+        }
+        .form input{
+            width: 400px;
+            height: 30px;
+            border: none;
+            border-bottom: 2px solid gray;
+        }
+        #sign-in-btn{
+            width: 150px;
+            height: 40px;
+            font-size: 19px
+            ;
+            background-color: black;
+            color: rgb(163, 159, 159);
+            margin: 5px auto 0px;
+            border-radius: 10px;
+        }
+        #sign-in-btn:hover{
+            color: rgb(242, 241, 241);
+        }
+        #message{
+            font-size: 15px;
+            color: red;
+            margin: 2px auto 0px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        /* <!-- ------------------------------------------------------------------------------------------------------------->  */
+        .cards{
+            width: 500px;
+            margin: 150px auto 0px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+            padding: 15px;
+            border: 3px solid gray;
+            border-radius: 15px ;
+            display: none;
+        }
+        .cards h1{
+            font-size: 28px;
+            text-decoration: underline;  
+            margin: 10px auto 0px;
+        }
+        .cards h2{
+            font-size: 20px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+
+            <h2 id="header">SignIn</h2>
+            <div class="form">
+                <input type="text" id = "email" placeholder="email">
+                <br>
+                <input type="password"  id="password" placeholder="password">
+            </div>
+            <button id="sign-in-btn" onclick="checkData()">SignIn</button>
+            <div id="message">Enter Valid Details</div>
+    </div>
+<!-- -------------------------------------------------------------------------------------------------------------> 
+        <div class="cards">
+            <h1>Profile</h1>
+            <h2 id="c-name">name : </h2>
+            <h2 id="c-email">Email : </h2>
+            <h2 id="c-pass">Pass : </h2>
+        </div>
+    
+
+    <script>
+        
+
+        function checkData(){
+
+
+            let email= document.getElementById("email") ;
+            let password = document.getElementById("password") ;
+            // getting from localStorage
+            let local_str = localStorage.getItem(email.value) ;
+
+            //strigify
+            console.log(local_str) ;
+
+
+            if(local_str === null){
+                let message = document.getElementById("message") ;
+                message.innerText = "Invalid UserName" ;
+                message.style.display = 'block' ;
+            }
+            else{
+                let local_obj = JSON.parse(local_str) ; 
+                let local_email = local_obj.email ;
+                let local_name =local_obj.name ;
+                let local_pass = local_obj.pass ;
+
+                if(password.value != local_pass){
+                let message = document.getElementById("message") ;
+                message.innerText = "Invalid PassWord" ;
+                message.style.display = 'block' ;
+                }
+                else{
+                // window.location.assign("profile.html") ;
+                
+                document.getElementsByClassName("card")[0].style.display = 'none' ;
+
+                // let local_obj = JSON.parse(local_str) ;
+                // console.log(local_obj) ;
+
+                let card_name = document.getElementById("c-name") ;
+                card_name.innerText = `Name : ${local_name}` ;
+
+                let card_email = document.getElementById("c-email") ;
+                card_email.innerText = `Email : ${local_email}` ;
+
+                let card_pass = document.getElementById("c-pass") ;
+                card_pass.innerText = `PassWord : ${local_pass}` ;
+
+                document.getElementsByClassName("cards")[0].style.display = 'block' ;
+
+                }
+            }        
+        }
+
+    </script>
+</body>
+</html>
